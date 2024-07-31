@@ -60,14 +60,15 @@ async function listMail() {
 
                         const mailTime = document.createElement('div');
                         mailTime.className = 'mail-time';
-                        mailTime.textContent = new Date(event.timestamp * 1000).toLocaleTimeString();
+                        const emailtime = new Date(event.timestamp * 1000).toLocaleTimeString();
+                        mailTime.textContent = emailtime;
 
                         mailItem.appendChild(mailSentBy);
                         mailItem.appendChild(mailSubject);
                         mailItem.appendChild(mailTime);
 
                         mailItem.addEventListener('click', () => {
-                            openModal(message);
+                            openModal(message, emailtime);
                         });
 
                         emailsContainer.appendChild(mailItem);
@@ -90,3 +91,32 @@ async function listMail() {
         spinnerContainer.style.display = 'none';
     }
 }
+
+
+
+function openModal(message, time) {
+    const modal = document.getElementById('myModal');
+    const modalText = document.getElementById('EmailText');
+    const modalTime = document.getElementById('modalTime');
+    const span = document.getElementsByClassName('close')[0];
+
+    modalText.innerHTML = `
+        <strong>From:</strong> ${message.From}<br>
+        <strong>Subject:</strong> ${message.Subject}<br>
+        <strong>Body:</strong> ${message['body-plain']}
+    `;
+    modalTime.innerHTML = `<strong>Time:</strong> ${time}`;
+    modal.style.display = 'block';
+
+    span.onclick = function () {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+}
+
+//TODO: CREATE A STARTUP FUNCTION

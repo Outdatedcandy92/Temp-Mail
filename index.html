@@ -27,7 +27,7 @@
                 <i class="fa-solid fa-pen-to-square"></i>
             </div>
 
-            <div class="bar-refresh">
+            <div class="bar-refresh" onclick="listMail();">
                 <i class="fa-solid fa-arrows-rotate"></i>
             </div>
 
@@ -66,8 +66,13 @@
 
 
 
-
-
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close"><i class="fa-regular fa-circle-xmark"></i></span>
+            <div id="EmailText" class="modal-text"></div>
+            <div class="modal-time" id="modalTime"></div>
+        </div>
+    </div>
 
 
     <script src="src/script.js"></script>
