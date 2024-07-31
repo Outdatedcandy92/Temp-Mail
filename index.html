@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Temp Mail</title>
     <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -19,11 +19,11 @@
     <div class="bar">
         <div class="bar-bar">
 
-            <div class="bar-copy">
+            <div class="bar-copy" onclick="copyEmail()">
                 <i class="fa-solid fa-copy"></i>
             </div>
 
-            <div class="bar-change" >
+            <div class="bar-change">
                 <i class="fa-solid fa-pen-to-square"></i>
             </div>
 
@@ -31,7 +31,7 @@
                 <i class="fa-solid fa-arrows-rotate"></i>
             </div>
 
-            <div class="bar-settings">
+            <div class="bar-settings" onclick="window.location.href=`settings.html`">
                 <i class="fa-solid fa-gear"></i>
             </div>
 
@@ -41,7 +41,7 @@
 
     <div class="inbox">
 
-        <div class="inbox-nav"> 
+        <div class="inbox-nav">
             <div class="sent-by">Sent By</div>
             <div class="time">Time</div>
         </div>
@@ -50,7 +50,7 @@
 
             <!-- TODO: DELETE option -->
 
-             <!-- email stuff will be added here -->
+            <!-- email stuff will be added here -->
 
             <div class="spinner-container">
                 <div id="spinner" class="spinner"></div>

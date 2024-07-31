@@ -119,4 +119,26 @@ function openModal(message, time) {
     }
 }
 
+let randomString;
+
+function RandomAddr() {
+    const EmailAddr = document.getElementById('Email');
+
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 10; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomString += characters[randomIndex];
+    }
+    EmailAddr.innerHTML= randomString
+}
+
+
+function copyEmail(){
+    const final = randomString + '@' + sandboxDomain;
+    navigator.clipboard.writeText(final);
+    alert('Email copied to clipboard');
+}
+
+
+
 //TODO: CREATE A STARTUP FUNCTION

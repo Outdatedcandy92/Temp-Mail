@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Settings</h1>
+        <form>
+            <label for="sandbox-domain">Sandbox Domain:</label>
+            <input type="text" id="sandbox-domain" name="sandbox-domain"><br><br>
+            
+            <label for="apikey">API Key:</label>
+            <input type="text" id="apikey" name="apikey"><br><br>
+            
+            <label for="number-of-items">Number of Items:</label>
+            <input type="number" id="number-of-items" name="number-of-items"><br><br>
+            
+            <label for="custom-names">Custom Names:</label>
+            <input type="text" id="custom-names" name="custom-names"><br><br>
+            
+            <input type="submit" value="Submit">
+        </form>
+
+        <a onclick="localStorage.removeItem('formData');">Reset</a>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const existingData = JSON.parse(localStorage.getItem('formData')) || {};
+            
+
+            const formData = new FormData(form);
+            const newData = Object.fromEntries(formData);
+            
+
+            for (const key in newData) {
+                if (newData[key]) { 
+                    existingData[key] = newData[key];
+                }
+            }
+            
+
+            localStorage.setItem('formData', JSON.stringify(existingData));
+            
+            console.log(existingData);
+
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
