@@ -66,6 +66,9 @@ async function listMail() {
                         mailItem.appendChild(mailSubject);
                         mailItem.appendChild(mailTime);
 
+                        mailItem.addEventListener('click', () => {
+                            openModal(message);
+                        });
 
                         emailsContainer.appendChild(mailItem);
 
@@ -87,10 +90,3 @@ async function listMail() {
         spinnerContainer.style.display = 'none';
     }
 }
-
-
-
-
-
-
-//TODO: create a start checkup function
