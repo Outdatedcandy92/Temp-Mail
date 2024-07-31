@@ -1,0 +1,78 @@
+body {
+    background-color: #22242b;
+    overflow: hidden;
+    max-width: 100vw;
+    max-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.email {
+    background-color: aliceblue;
+    width: 30vh;
+    height: 5vh;
+    border-radius: 20px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.email-text {
+    padding: 10px;
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    max-height: 5vh;
+    overflow: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.inbox {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(198, 198, 198);
+    padding: 10px;
+    box-sizing: border-box;
+    width: 80vw;
+    height: 70vh;
+    border-radius: 20px;
+    margin-bottom: 5vh;
+}
+
+.inbox-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background-color: #616161;
+    color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sent-by {
+    margin-left: 10px;
+}
+
+.time {
+    margin-right: 10px;
+}
+
+.mailbox {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    height: 90%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
