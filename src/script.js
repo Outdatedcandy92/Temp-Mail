@@ -1,8 +1,5 @@
-const sandboxDomain = localStorage.getItem('sandboxDomain');
-const apikey = localStorage.getItem('apikey');
-const num = 5;
 
-async function listMail() {
+async function listMail(sandboxDomain, apikey, num) {
     const emailsContainer = document.getElementById('emailsContainer');
 
     Array.from(emailsContainer.children).forEach(child => {
@@ -119,26 +116,126 @@ function openModal(message, time) {
     }
 }
 
-let randomString;
+let randomString = '';
 
 function RandomAddr() {
+    try {
+
+        if (!EmailAddr) {
+            throw new Error('Element with id "Email" not found');
+        }
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        randomString = '';
+        for (let i = 0; i < 10; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            randomString += characters[randomIndex];
+        }
+        console.log('Generated random string:', randomString);
+
+        return randomString;
+
+    } catch (error) {
+        console.error('Error in RandomAddr function:', error);
+    }
+}
+
+function copyEmail() {
+    try {
+        if (!randomString) {
+            throw new Error('Random string is empty');
+        }
+
+        const final = randomString + '@' + sandboxDomain;
+        navigator.clipboard.writeText(final).then(() => {
+            console.log('Email copied to clipboard:', final);
+            alert('Email copied to clipboard');
+        }).catch(err => {
+            console.error('Failed to copy email to clipboard:', err);
+        });
+    } catch (error) {
+        console.error('Error in copyEmail function:', error);
+    }
+}
+
+
+function CustomNames(nameslist) {
+    try {
+        const namesInput = nameslist; // FIX: Add localstorage after test
+        if (!namesInput) {
+            throw new Error('namesInput not found');
+        }
+
+        const namesString = namesInput;
+        if (!namesString) {
+            throw new Error('No names provided in the input');
+        }
+
+        const namesArray = namesString.split(',').map(name => name.trim());
+        console.log('Names array:', namesArray);
+
+        const randomIndex = Math.floor(Math.random() * namesArray.length);
+        const randomName = namesArray[randomIndex];
+        console.log('Randomly selected name:', randomName);
+
+        const [firstName, lastName] = randomName.split(' ');
+        if (!firstName || !lastName) {
+            throw new Error('Invalid name format. Each name should contain a first and last name');
+        }
+    
+        const randomNumber = Math.floor(Math.random() * 1000); 
+        const emailAddress = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${randomNumber}`;
+        console.log('Generated email address:', emailAddress);
+    
+
+        return emailAddress;
+
+
+
+    } catch (error) {
+        console.error('Error in CustomNames function:', error);
+    }
+}
+
+
+
+
+
+function Startup() {
     const EmailAddr = document.getElementById('Email');
 
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 10; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        randomString += characters[randomIndex];
+
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    console.log(formData);
+    if (formData) {
+        const sandboxDomain = formData['sandbox-domain'];
+        const apikey = formData['apikey'];
+        const num = formData['number-of-items'];
+        const customnames = formData['custom-names'];
+
+        console.log('Sandbox Domain:', sandboxDomain);
+        console.log('API Key:', apikey);
+        console.log('Number of Items:', num);
+
+        
+        //listMail(sandboxDomain, apikey, num);
+
+        if (customnames === 'null') {
+            console.log(customnames);
+            EmailAddr.innerHTML = RandomAddr();
+            
+        } else {
+            //todo: logic for custom names (done)
+            console.log(customnames);
+            EmailAddr.innerHTML = CustomNames(customnames);
+
+        }
+
+    } else {
+        alert('Please enter your sandbox domain and API key');
+        window.location.href = 'settings.html';
     }
-    EmailAddr.innerHTML= randomString
 }
 
 
-function copyEmail(){
-    const final = randomString + '@' + sandboxDomain;
-    navigator.clipboard.writeText(final);
-    alert('Email copied to clipboard');
-}
-
-
-
-//TODO: CREATE A STARTUP FUNCTION
+Startup();

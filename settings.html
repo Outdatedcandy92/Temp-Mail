@@ -86,7 +86,7 @@
             <input type="number" id="number-of-items" name="number-of-items"><br><br>
             
             <label for="custom-names">Custom Names:</label>
-            <input type="text" id="custom-names" name="custom-names"><br><br>
+            <input type="text" id="custom-names" name="custom-names" placeholder="Format should be (Firstname + space + lastname) Entries to be seperated by commas "><br><br>
             
             <input type="submit" value="Submit">
         </form>
@@ -94,30 +94,38 @@
         <a onclick="localStorage.removeItem('formData');">Reset</a>
     </div>
 
+
+    
     <script>
         const form = document.querySelector('form');
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            const existingData = JSON.parse(localStorage.getItem('formData')) || {};
-            
-
-            const formData = new FormData(form);
-            const newData = Object.fromEntries(formData);
-            
-
-            for (const key in newData) {
-                if (newData[key]) { 
-                    existingData[key] = newData[key];
+            try {
+                console.log('Form submission started.');
+    
+                const existingData = JSON.parse(localStorage.getItem('formData')) || {};
+                console.log('Existing data:', existingData);
+    
+                const formData = new FormData(form);
+                const newData = Object.fromEntries(formData);
+                console.log('New form data:', newData);
+    
+                for (const key in newData) {
+                    if (newData[key]) { 
+                        existingData[key] = newData[key];
+                        console.log(`Updated ${key} to ${newData[key]}`);
+                    }
                 }
+    
+                localStorage.setItem('formData', JSON.stringify(existingData));
+                console.log('Updated localStorage with new data:', existingData);
+    
+                window.location.href = 'index.html';
+                console.log('Redirecting to index.html');
+            } catch (error) {
+                console.error('Error during form submission:', error);
             }
-            
-
-            localStorage.setItem('formData', JSON.stringify(existingData));
-            
-            console.log(existingData);
-
-            window.location.href = 'index.html';
         });
     </script>
 </body>
