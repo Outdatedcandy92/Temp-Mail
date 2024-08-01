@@ -1,5 +1,9 @@
+const formData = JSON.parse(localStorage.getItem('formData'));
+const sandboxDomain = formData['sandbox-domain'];
+const apikey = formData['apikey'];
+const num = formData['number-of-items'];
 
-async function listMail(sandboxDomain, apikey, num) {
+async function listMail() {
     const emailsContainer = document.getElementById('emailsContainer');
 
     Array.from(emailsContainer.children).forEach(child => {
@@ -98,9 +102,16 @@ function openModal(message, time) {
     const span = document.getElementsByClassName('close')[0];
 
     modalText.innerHTML = `
-        <strong>From:</strong> ${message.From}<br>
-        <strong>Subject:</strong> ${message.Subject}<br>
-        <strong>Body:</strong> ${message['body-plain']}
+
+        <div class="email-from">
+            <strong>From:</strong> ${message.From}<br>
+        </div>
+        <div class="email-subject">
+            <strong>Subject:</strong> ${message.Subject}<br>
+        </div>
+        <div class="email-body">    
+            <strong>Body:</strong> ${message['body-plain']}
+        </div>    
     `;
     modalTime.innerHTML = `<strong>Time:</strong> ${time}`;
     modal.style.display = 'block';
@@ -121,10 +132,6 @@ let randomString = '';
 function RandomAddr() {
     try {
 
-        if (!EmailAddr) {
-            throw new Error('Element with id "Email" not found');
-        }
-
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         randomString = '';
         for (let i = 0; i < 10; i++) {
@@ -142,6 +149,8 @@ function RandomAddr() {
 
 function copyEmail() {
     try {
+        const randomString = document.getElementById('Email').textContent;
+
         if (!randomString) {
             throw new Error('Random string is empty');
         }
@@ -208,9 +217,6 @@ function Startup() {
     const formData = JSON.parse(localStorage.getItem('formData'));
     console.log(formData);
     if (formData) {
-        const sandboxDomain = formData['sandbox-domain'];
-        const apikey = formData['apikey'];
-        const num = formData['number-of-items'];
         const customnames = formData['custom-names'];
 
         console.log('Sandbox Domain:', sandboxDomain);
@@ -218,10 +224,10 @@ function Startup() {
         console.log('Number of Items:', num);
 
         
-        //listMail(sandboxDomain, apikey, num);
+        listMail();
 
         if (customnames === 'null') {
-            console.log(customnames);
+            console.log(customnames, 'is null');
             EmailAddr.innerHTML = RandomAddr();
             
         } else {
@@ -239,3 +245,36 @@ function Startup() {
 
 
 Startup();
+
+
+
+
+
+
+async function ForwardTo(Email) {
+    const url = `https://api.mailgun.net/v3/routes`;
+
+    const route = {
+        priority: 1,
+        description: `Forward all emails to ${Email}`,
+        expression: `match_recipient(".*@${sandboxDomain}")`,
+        action: [`forward("${Email}")`, 'stop()']
+    };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Basic ' + btoa('api:' + apiKey),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(route)
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        console.error('Error creating route:', error);
+    } else {
+        const result = await response.json();
+        console.log('Route created:', result);
+    }
+}

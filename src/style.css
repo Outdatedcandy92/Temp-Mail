@@ -6,6 +6,30 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    color: white;
+}
+
+.header-title {
+    font-size: 24px; 
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+
+
 .email {
     background-color: aliceblue;
     width: 30vh;
@@ -209,16 +233,30 @@ body {
     font-family: Arial, sans-serif;
     font-size: 14px;
     line-height: 1.5;
+    margin: 10px;
 }
 
 .modal-text strong {
     font-weight: bold;
 }
 
+.email-subject {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.email-body {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
 .modal-time {
     position: absolute;
     bottom: 10px;
-    left: 10px;
+    right: 10px;
     font-size: 12px;
-    color: #555;
+    color: #007BFF;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
 }
